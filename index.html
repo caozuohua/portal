@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cao Zuohua | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e17; --bg2: #111827; --surface: #1a2235; --surface2: #243044;
+      --border: #2d3d54; --text: #e8ecf1; --text-secondary: #8892a4;
+      --blue: #3b82f6; --cyan: #06b6d4; --green: #10b981; --purple: #8b5cf6;
+      --amber: #f59e0b; --red: #ef4444; --pink: #ec4899;
+      --radius: 16px; --radius-sm: 10px;
+      --font: 'Inter', 'Noto Sans SC', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+
+    /* Animated background */
+    .bg-grid {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .bg-glow {
+      position: fixed; top: -30%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+      pointer-events: none; z-index: 0; animation: glowPulse 8s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    /* Nav */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      background: rgba(10,14,23,0.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(45,61,84,0.5); height: 60px;
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-brand { font-weight: 800; font-size: 1.1em; background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 0.88em; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero { padding: 140px 0 80px; text-align: center; position: relative; }
+    .hero-avatar {
+      width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 24px;
+      background: linear-gradient(135deg, var(--blue), var(--purple), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5em; box-shadow: 0 0 40px rgba(59,130,246,0.3);
+      animation: avatarGlow 4s ease-in-out infinite;
+    }
+    @keyframes avatarGlow {
+      0%, 100% { box-shadow: 0 0 40px rgba(59,130,246,0.3); }
+      50% { box-shadow: 0 0 60px rgba(59,130,246,0.5); }
+    }
+    .hero h1 { font-size: 3.2em; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em; }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--blue), var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-tagline { font-size: 1.2em; color: var(--text-secondary); margin-bottom: 16px; font-weight: 300; }
+    .hero-badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 20px; font-size: 0.82em; font-weight: 500;
+      background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary);
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .hero-cta { display: flex; justify-content: center; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: var(--radius-sm); font-size: 0.92em; font-weight: 600;
+      text-decoration: none; transition: all 0.25s; cursor: pointer; border: none; font-family: var(--font);
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), #2563eb); color: #fff; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.4); }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--blue); background: var(--surface2); }
+
+    /* Section */
+    .section { padding: 80px 0; }
+    .section-header { margin-bottom: 40px; }
+    .section-label {
+      font-size: 0.82em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--blue); margin-bottom: 8px;
+    }
+    .section-title { font-size: 2em; font-weight: 800; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); margin-top: 8px; font-size: 1.05em; }
+
+    /* Featured Projects */
+    .featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .featured-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px; transition: all 0.3s;
+      position: relative; overflow: hidden; text-decoration: none; color: inherit;
+    }
+    .featured-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .featured-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.3); border-color: transparent; }
+    .featured-card:hover::before { opacity: 1; }
+    .featured-card.c1::before { background: linear-gradient(90deg, #0f4c81, #00c9a7); }
+    .featured-card.c2::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+    .featured-card.c3::before { background: linear-gradient(90deg, #10b981, #34d399); }
+    .featured-card.c4::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .card-icon { font-size: 2em; margin-bottom: 16px; }
+    .card-title { font-size: 1.3em; font-weight: 700; margin-bottom: 8px; }
+    .card-desc { color: var(--text-secondary); font-size: 0.92em; margin-bottom: 16px; line-height: 1.6; }
+    .card-stats { display: flex; gap: 16px; margin-bottom: 16px; }
+    .card-stat { font-size: 0.82em; color: var(--text-secondary); }
+    .card-stat strong { color: var(--text); }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .card-tag {
+      font-size: 0.74em; padding: 3px 10px; border-radius: 6px;
+      background: var(--surface2); color: var(--text-secondary); font-weight: 500;
+    }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.85em; font-weight: 600; margin-top: 16px;
+      transition: gap 0.2s;
+    }
+    .featured-card:hover .card-link { gap: 8px; }
+    .card-link.c1 { color: #00c9a7; }
+    .card-link.c2 { color: #3b82f6; }
+    .card-link.c3 { color: #10b981; }
+    .card-link.c4 { color: #8b5cf6; }
+
+    /* Projects Grid */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px; transition: all 0.25s;
+      text-decoration: none; color: inherit;
+    }
+    .project-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .project-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .project-name { font-weight: 600; font-size: 0.95em; }
+    .project-lang {
+      font-size: 0.72em; padding: 2px 8px; border-radius: 4px;
+      background: var(--surface2); color: var(--text-secondary);
+    }
+    .project-desc { font-size: 0.85em; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px; }
+    .project-meta { display: flex; gap: 12px; font-size: 0.78em; color: var(--text-secondary); }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .about-text p { margin-bottom: 16px; color: var(--text-secondary); font-size: 1em; }
+    .about-text strong { color: var(--text); }
+    .about-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .skill-tag {
+      padding: 6px 14px; border-radius: 20px; font-size: 0.82em; font-weight: 500;
+      background: var(--surface); border: 1px solid var(--border);
+    }
+    .about-visual { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px; text-align: center;
+    }
+    .stat-card .num { font-size: 2em; font-weight: 800; }
+    .stat-card .label { font-size: 0.78em; color: var(--text-secondary); margin-top: 4px; }
+    .stat-card:nth-child(1) .num { color: var(--blue); }
+    .stat-card:nth-child(2) .num { color: var(--cyan); }
+    .stat-card:nth-child(3) .num { color: var(--green); }
+    .stat-card:nth-child(4) .num { color: var(--purple); }
+    .stat-card:nth-child(5) .num { color: var(--amber); }
+    .stat-card:nth-child(6) .num { color: var(--pink); }
+
+    /* Footer */
+    .footer { text-align: center; padding: 48px 0; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.88em; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+    .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--blue); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2em; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-brand">CAO ZUOHUA</div>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#featured">Featured</a>
+      <a href="#about">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-avatar">👨‍💻</div>
+    <h1>Cao <span class="gradient">Zuohua</span></h1>
+    <p class="hero-tagline">Data · AI · Finance — Building open-source tools for the community</p>
+    <div class="hero-badges">
+      <span class="hero-badge"><span class="dot"></span> Open to collaborate</span>
+      <span class="hero-badge">📍 China</span>
+      <span class="hero-badge">🔬 Data + AI + Finance</span>
+      <span class="hero-badge">🛠️ Python / Shell / TypeScript</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#featured" class="btn btn-primary">Explore Projects →</a>
+      <a href="https://caozuohua.github.io" class="btn btn-secondary">📝 Blog</a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Projects -->
+<section class="section" id="featured">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Featured</div>
+      <h2 class="section-title">Core Projects</h2>
+      <p class="section-desc">Open-source projects I build, maintain, and use daily.</p>
+    </div>
+    <div class="featured-grid">
+      <a href="https://github.com/caozuohua/power-digital-cases" class="featured-card c1" target="_blank" rel="noopener">
+        <div class="card-icon">⚡</div>
+        <h3 class="card-title">Power Digital Cases</h3>
+        <p class="card-desc">全球电力行业数字化项目案例集。483 cases · 42 countries · 191 companies · 24 technology tags. Interactive world map + dashboards.</p>
+        <div class="card-stats">
+          <span class="card-stat"><strong>483</strong> cases</span>
+          <span class="card-stat"><strong>42</strong> countries</span>
+          <span class="card-stat"><strong>24</strong> tags</span>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">Data Visualization</span>
+          <span class="card-tag">Leaflet</span>
+          <span class="card-tag">Energy Sector</span>
+        </div>
+        <span class="card-link c1">View Project →</span>
+      </a>
+
+      <a href="https://caozuohua.github.io/fund-portfolio-analyzer/" class="featured-card c2" target="_blank" rel="noopener">
+        <div class="card-icon">💰</div>
+        <h3 class="card-title">Fund Portfolio Analyzer</h3>
+        <p class="card-desc">个人基金持仓智能分析系统。自动拉取净值 + AI 驱动调整建议 + 邮件周报。Conservative style: Cash 35% / Bonds 35% / Equity 25% / QDII 5%.</p>
+        <div class="card-stats">
+          <span class="card-stat"><strong>11</strong> funds</span>
+          <span class="card-stat"><strong>¥1.27M</strong> tracked</span>
+          <span class="card-stat"><strong>Weekly</strong> auto-report</span>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">akshare</span>
+          <span class="card-tag">Gemini AI</span>
+          <span class="card-tag">GitHub Actions</span>
+        </div>
+        <span class="card-link c2">View Project →</span>
+      </a>
+
+      <a href="https://caozuohua.github.io/free-resources/" class="featured-card c3" target="_blank" rel="noopener">
+        <div class="card-icon">🎁</div>
+        <h3 class="card-title">Free Resources</h3>
+        <p class="card-desc">全球免费资源聚合。GPU 算力 + LLM API + 本地模型 + VPS + 开发工具。97 resources, auto-verified weekly.</p>
+        <div class="card-stats">
+          <span class="card-stat"><strong>97</strong> resources</span>
+          <span class="card-stat"><strong>5</strong> categories</span>
+          <span class="card-stat"><strong>Auto</strong>-verified</span>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">GPU</span>
+          <span class="card-tag">LLM API</span>
+          <span class="card-tag">VPS</span>
+          <span class="card-tag">Dev Tools</span>
+        </div>
+        <span class="card-link c3">View Project →</span>
+      </a>
+
+      <a href="https://caozuohua.github.io" class="featured-card c4" target="_blank" rel="noopener">
+        <div class="card-icon">📝</div>
+        <h3 class="card-title">Blog</h3>
+        <p class="card-desc">个人技术博客。分享 AI Agent 实践、投资分析、技术探索。Hugo + Ananke theme, clean & fast.</p>
+        <div class="card-stats">
+          <span class="card-stat"><strong>12+</strong> posts</span>
+          <span class="card-stat"><strong>CN</strong> / EN</span>
+          <span class="card-stat"><strong>Hugo</strong> powered</span>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">Tech</span>
+          <span class="card-tag">AI Agent</span>
+          <span class="card-tag">Finance</span>
+        </div>
+        <span class="card-link c4">View Project →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- All Projects -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">All Projects</div>
+      <h2 class="section-title">More from the Lab</h2>
+      <p class="section-desc">Tools, experiments, and side projects.</p>
+    </div>
+    <div class="projects-grid">
+      <a href="https://github.com/caozuohua/ai-daily-newsletter" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">📰 AI Daily Newsletter</span><span class="project-lang">Python</span></div>
+        <p class="project-desc">AI 新闻聚合，每日自动推送 AI 领域最新动态。</p>
+        <div class="project-meta"><span>⭐ 1</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/nanobot" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🐈 nanobot</span><span class="project-lang">Python</span></div>
+        <p class="project-desc">The Ultra-Lightweight Personal AI Agent.</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/tools-configs" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🔧 tools-configs</span><span class="project-lang">Python</span></div>
+        <p class="project-desc">自制技能、工具脚本和配置文件集合。</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/vps_sysops" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🖥️ vps_sysops</span><span class="project-lang">Shell</span></div>
+        <p class="project-desc">GCP Ubuntu VPS 全面运维脚本，12 个功能模块。</p>
+        <div class="project-meta"><span>⭐ 1</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/codegraph" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🧠 codegraph</span><span class="project-lang">TypeScript</span></div>
+        <p class="project-desc">Pre-indexed code knowledge graph for AI agents. 100% local.</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/spidermind" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🕷️ spidermind</span><span class="project-lang">Python</span></div>
+        <p class="project-desc">AI-Powered Modular Web Crawler Framework.</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/luck-agent" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🍀 luck-agent</span><span class="project-lang">Python</span></div>
+        <p class="project-desc">极简个人助手 Lark × GCP 智能体。</p>
+        <div class="project-meta"><span>⭐ 1</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/crawlcraft" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🕸️ crawlcraft</span><span class="project-lang">Python</span></div>
+        <p class="project-desc">Personal intelligent crawler framework - LLM-native, Schema-driven.</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/gamedev-hub" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🎮 gamedev-hub</span><span class="project-lang">Docs</span></div>
+        <p class="project-desc">个人游戏开发工作手册 — AI 原生 + 数据驱动 + 快速迭代。</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/Newapi-checkin" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">✅ Newapi-checkin</span><span class="project-lang">HTML</span></div>
+        <p class="project-desc">NewAPI 自动签到系统 — 多账号、多站点、GitHub Actions 自动化。</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/WARP-Clash-API" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🌐 WARP-Clash-API</span><span class="project-lang">Python</span></div>
+        <p class="project-desc">通过订阅方式使用 Cloudflare WARP+，自动获取流量。</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+      <a href="https://github.com/caozuohua/claude-code-analysis" class="project-card" target="_blank" rel="noopener">
+        <div class="project-card-header"><span class="project-name">🤖 claude-code-analysis</span><span class="project-lang">TypeScript</span></div>
+        <p class="project-desc">The analysis of Claude Code architecture and capabilities.</p>
+        <div class="project-meta"><span>⭐ 0</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">About</div>
+        <h2 class="section-title" style="margin-bottom:20px">Who I Am</h2>
+        <p>Hi! I'm <strong>Cao Zuohua</strong>, a developer focused on the intersection of <strong>data, AI, and finance</strong>.</p>
+        <p>I believe in <strong>open-source as leverage</strong> — building tools that compound in value over time. My projects range from data assets (483 power industry cases) to personal finance automation (AI-driven fund analysis) to community resources (curated free tiers).</p>
+        <p>Currently exploring: <strong>AI Agent architectures</strong>, <strong>LLM-native automation</strong>, and <strong>data-driven investing</strong>.</p>
+        <p>I use <strong>Hermes Agent</strong> daily and contribute to the ecosystem. Always open to collaboration on interesting projects.</p>
+        <div class="about-skills">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Shell</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">AI Agents</span>
+          <span class="skill-tag">LLM</span>
+          <span class="skill-tag">Data Analysis</span>
+          <span class="skill-tag">akshare</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">Hugo</span>
+          <span class="skill-tag">GCP</span>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="stat-card"><div class="num">48</div><div class="label">Repos</div></div>
+        <div class="stat-card"><div class="num">12</div><div class="label">Pinned</div></div>
+        <div class="stat-card"><div class="num">483</div><div class="label">Cases</div></div>
+        <div class="stat-card"><div class="num">97</div><div class="label">Resources</div></div>
+        <div class="stat-card"><div class="num">11</div><div class="label">Funds</div></div>
+        <div class="stat-card"><div class="num">∞</div><div class="label">Ideas</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="https://github.com/caozuohua">GitHub</a>
+      <a href="https://caozuohua.github.io">Blog</a>
+      <a href="https://caozuohua.github.io/free-resources/">Free Resources</a>
+      <a href="https://caozuohua.github.io/fund-portfolio-analyzer/">Fund Analyzer</a>
+      <a href="https://github.com/caozuohua/power-digital-cases">Power Cases</a>
+    </div>
+    <p>© 2026 Cao Zuohua · Built with ❤️ and open-source</p>
+  </div>
+</footer>
+
+</body>
+</html>
