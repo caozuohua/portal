@@ -100,7 +100,16 @@
     .section-desc { color: var(--text-secondary); margin-top: 8px; font-size: 1.05em; }
 
     /* Featured Projects */
-    .featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .featured-grid .wide { grid-column: span 2; }
+    @media (max-width: 1024px) {
+      .featured-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-grid .wide { grid-column: span 2; }
+    }
+    @media (max-width: 768px) {
+      .featured-grid { grid-template-columns: 1fr; }
+      .featured-grid .wide { grid-column: span 1; }
+    }
     .featured-card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 32px; transition: all 0.3s;
@@ -116,6 +125,7 @@
     .featured-card.c2::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
     .featured-card.c3::before { background: linear-gradient(90deg, #10b981, #34d399); }
     .featured-card.c4::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .featured-card.c5::before { background: linear-gradient(90deg, #f59e0b, #f97316); }
     .card-icon { font-size: 2em; margin-bottom: 16px; }
     .card-title { font-size: 1.3em; font-weight: 700; margin-bottom: 8px; }
     .card-desc { color: var(--text-secondary); font-size: 0.92em; margin-bottom: 16px; line-height: 1.6; }
@@ -137,6 +147,7 @@
     .card-link.c2 { color: #3b82f6; }
     .card-link.c3 { color: #10b981; }
     .card-link.c4 { color: #8b5cf6; }
+    .card-link.c5 { color: #f59e0b; }
 
     /* Projects Grid */
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
@@ -305,6 +316,24 @@
           <span class="card-tag">Finance</span>
         </div>
         <span class="card-link c4">View Project →</span>
+      </a>
+
+      <a href="https://world-of-claudecraft.vercel.app" class="featured-card c5" target="_blank" rel="noopener">
+        <div class="card-icon">🎮</div>
+        <h3 class="card-title">World of ClaudeCraft</h3>
+        <p class="card-desc">经典风格 MMO 网页游戏。客户端 + 服务端架构，PostgreSQL 持久化，支持多人在线和离线模式。Three.js 渲染，确定性仿真核心。</p>
+        <div class="card-stats">
+          <span class="card-stat"><strong>MMO</strong> game</span>
+          <span class="card-stat"><strong>Three.js</strong> 3D</span>
+          <span class="card-stat"><strong>Online</strong> + Offline</span>
+        </div>
+        <div class="card-tags">
+          <span class="card-tag">Game</span>
+          <span class="card-tag">Three.js</span>
+          <span class="card-tag">PostgreSQL</span>
+          <span class="card-tag">Multiplayer</span>
+        </div>
+        <span class="card-link c5">Play Now →</span>
       </a>
     </div>
   </div>
